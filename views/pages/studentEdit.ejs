@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
+    <title>Student - Dashboard</title>
+</head>
+
+<body class="bg-[#0082E3] max-w-screen max-h-screen font-inter bg-cover"
+    style="background-image: url(/images/wave.svg); ">
+    <div class="flex justify-center w-full h-full">
+        <%- include("../partials/studentSidebar") %>
+
+            <div class="flex flex-col justify-center w-[80%] h-screen">
+                <%- include("../partials/studentNavbar") %>
+
+                    <div class="flex justify-center w-full h-[85%] p-4">
+                        <div class="flex flex-col w-full bg-gray-50 rounded-xl shadow-lg overflow-y-auto">
+                            <div class="flex justify-between w-full border-b-2 px-8 py-4">
+                                <h1 class="text-gray-700 font-bold text-xl">Edit Profile</h1>
+                                <%- include("../partials/deleteStudentModal", { data: users }) %>
+                            </div>
+                            <div class="flex justify-center px-8 w-full">
+                                <form action="/update-student/<%= users.id %>" method="POST"
+                                    class="flex flex-col justify-center w-full space-y-8 px-20 py-4">
+                                    <div class="flex flex-col justify-start space-y-2 w-full">
+                                        <label for="fullname">Fullname</label>
+                                        <input type="text" name="fullname"
+                                            class="bg-gray-200 text-gray-900 outline-blue-500 rounded-xl border-none px-4"
+                                            value="<%= users.fullname %>">
+                                    </div>
+                                    <div class="flex flex-col justify-start space-y-2 w-full">
+                                        <label for="dateOfBirth">Date Of Birth</label>
+                                        <input type="date" name="dateOfBirth"
+                                            class="bg-gray-200 text-gray-900 outline-blue-500 rounded-xl border-none px-4"
+                                            value="<%= moment(users.dateOfBirth).format('YYYY-MM-DD')
+                                            %>">
+                                    </div>
+                                    <div class="flex flex-col justify-start space-y-2 w-full">
+                                        <label for="phoneNumber">Phone Number</label>
+                                        <input type="number" name="phoneNumber"
+                                            class="bg-gray-200 text-gray-900 outline-blue-500 rounded-xl border-none px-4"
+                                            value="<%= users.phoneNumber %>">
+                                    </div>
+                                    <div class="flex flex-col justify-start space-y-2 w-full">
+                                        <label for="parentName">Parent Name</label>
+                                        <input type="text" name="parentName"
+                                            class="bg-gray-200 text-gray-900 outline-blue-500 rounded-xl border-none px-4"
+                                            value="<%= users.parentName %>">
+                                    </div>
+                                    <div class="flex flex-col justify-start space-y-2 w-full">
+                                        <label for="parentNumber">Parent Number</label>
+                                        <input type="number" name="parentNumber"
+                                            class="bg-gray-200 text-gray-900 outline-blue-500 rounded-xl border-none px-4"
+                                            value="<%= users.parentNumber %>">
+                                    </div>
+                                    <div class="flex flex-col justify-start space-y-2 w-full">
+                                        <label for="email">Email</label>
+                                        <input type="email" name="email"
+                                            class="bg-gray-200 text-gray-900 outline-blue-500 rounded-xl border-none px-4"
+                                            value="<%= users.email %>">
+                                    </div>
+                                    <div class="flex flex-col justify-start space-y-2 w-full">
+                                        <label for="password">Password</label>
+                                        <input type="password" name="password"
+                                            class="bg-gray-200 text-gray-900 outline-blue-500 rounded-xl border-none px-4"
+                                            value="<%= users.password %>">
+                                    </div>
+                                    <div class="flex flex-col justify-start space-y-2 w-full">
+                                        <label for="Address">Address</label>
+                                        <textarea name="address"
+                                            class="bg-gray-200 text-gray-900 outline-blue-500 rounded-xl border-none resize-none h-32 p-4"><%= users.address %></textarea>
+                                    </div>
+                                    <div class="flex justify-center space-x-4 w-full">
+                                        <a href="/student-dashboard"
+                                            class="bg-white text-gray-900 px-6 py-2 outline-blue-500 rounded-xl border-2">Cancel</a>
+                                        <button type="submit"
+                                            class="bg-[#0082E3] text-gray-100 px-6 py-2 outline-blue-500 rounded-xl border-none">
+                                            Save
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+    </div>
+</body>
+
+</html>

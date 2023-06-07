@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Sign Up</title>
+</head>
+
+<body class="bg-[#0082E3] max-w-screen max-h-screen font-inter">
+    <div class="flex justify-center items-center w-full h-full">
+        <div class="flex flex-1 justify-center w-full mx-10 pb-[700px]">
+            <img src="/images/blue-user-icon-symbol-website-admin-social-login-element-concept-white-background-3d-rendering 1.svg"
+                alt="img" width="500" height="500">
+        </div>
+        <div class="flex-1 flex-col justify-center w-full mx-5">
+            <div class="flex flex-col justify-center w-full">
+                <div class="flex justify-center items-center w-full p-10">
+                    <h1 class="text-[80px] text-[#ffffff] font-extrabold">Sign Up</h1>
+                </div>
+            </div>
+            <div class="flex-col justify-center items-center w-full p-10">
+                <form action="/sign-up-student" method="POST" class="flex-col justify-center w-full space-y-8 px-8">
+                    <div class="flex justify-center w-full space-x-8">
+                        <div class="flex flex-1 flex-col justify-start">
+                            <label for="fullname" class="text-lg font-semibold text-[#ffffff]">Fullname</label>
+                            <input type="text" name="fullname"
+                                class="p-4 bg-[#EEF3FB] text-gray-500 outline-none rounded-xl shadow-md">
+                        </div>
+                        <div class="flex flex-1 flex-col justify-start">
+                            <label for="dateOfBirth" class="text-lg font-semibold text-[#ffffff]">Date Of Birth</label>
+                            <input type="date" name="dateOfBirth"
+                                class="p-4 bg-[#EEF3FB] text-gray-500 outline-none rounded-xl shadow-md">
+                        </div>
+                    </div>
+                    <div class="flex justify-center w-full space-x-8">
+                        <div class="flex flex-1 flex-col justify-start">
+                            <label for="phoneNumber" class="text-lg font-semibold text-[#ffffff]">Phone Number</label>
+                            <input type="number" name="phoneNumber"
+                                class="p-4 bg-[#EEF3FB] text-gray-500 outline-none rounded-xl shadow-md">
+                        </div>
+                        <div class="flex flex-1 flex-col justify-start">
+                            <label for="parentName" class="text-lg font-semibold text-[#ffffff]">Parent Name</label>
+                            <input type="text" name="parentName"
+                                class="p-4 bg-[#EEF3FB] text-gray-500 outline-none rounded-xl shadow-md">
+                        </div>
+                    </div>
+                    <div class="flex justify-center w-full space-x-8">
+                        <div class="flex flex-1 flex-col justify-start">
+                            <label for="parentNumber" class="text-lg font-semibold text-[#ffffff]">Parent Number</label>
+                            <input type="number" name="parentNumber"
+                                class="p-4 bg-[#EEF3FB] text-gray-500 outline-none rounded-xl shadow-md">
+                        </div>
+                        <div class="flex flex-1 flex-col justify-start">
+                            <label for="email" class="text-lg font-semibold text-[#ffffff]">Email</label>
+                            <input type="email" name="email"
+                                class="p-4 bg-[#EEF3FB] text-gray-500 outline-none rounded-xl shadow-md">
+                        </div>
+                    </div>
+                    <div class="flex justify-center w-full space-x-8">
+                        <div class="flex flex-1 flex-col justify-start">
+                            <label for="password" class="text-lg font-semibold text-[#ffffff]">Password</label>
+                            <input type="password" name="password"
+                                class="p-4 bg-[#EEF3FB] text-gray-500 outline-none rounded-xl shadow-md">
+                        </div>
+                    </div>
+                    <div class="flex justify-center w-full space-x-8">
+                        <div class="flex flex-1 flex-col justify-start">
+                            <label for="address" class="text-lg font-semibold text-[#ffffff]">Address</label>
+                            <textarea type="text" name="address"
+                                class="p-4 bg-[#EEF3FB] text-gray-500 outline-none rounded-xl shadow-md h-32 resize-none"></textarea>
+                        </div>
+                    </div>
+                    <div class="flex flex-col justify-center items-center w-full space-y-4">
+                        <div class="flex justify-start items-center w-full">
+                            <h1 class="text-lg font-semibold text-[#ffffff]">Choose your grade : </h1>
+                        </div>
+                        <div class="flex justify-start items-center w-full">
+                            <div class="flex flex-1 flex-col justify-start space-y-4">
+                                <div class="flex flex-col space-y-2 w-full">
+                                    <% data.forEach((grade)=> { %>
+                                        <div class="flex items-center space-x-2">
+                                            <input id="gradeName" type="checkbox" name="gradeName[]"
+                                                value="<%= grade.id %>"
+                                                class="bg-[#EEF3FB] text-gray-500 outline-none w-5 h-5">
+                                            <label for="gradeName" class="text-lg font-semibold text-[#ffffff]">
+                                                <%= grade.gradeName %>
+                                            </label>
+                                        </div>
+                                        <% }) %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex flex-col justify-center">
+                        <button
+                            class="p-4 bg-[#FF7D61] text-[#ffffff] font-semibold rounded-xl shadow-md hover:bg-[#FF3F15] hover:shadow-xl">Register</button>
+                    </div>
+                </form>
+            </div>
+            <div class="flex justify-center w-full">
+                <div class="flex justify-center items-center w-full p-10 space-x-2">
+                    <h1 class="text-[18px] text-[#000000] font-medium">Already have account?</h1><a href="/"
+                        class="text-[18px] text-[#ffffff] font-semibold hover:underline">Login
+                        here</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

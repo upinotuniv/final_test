@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Sign In</title>
+</head>
+
+<body class="bg-[#0082E3] max-w-screen max-h-screen font-inter">
+    <div class="flex justify-center items-center w-full h-full">
+        <div class="flex flex-1 justify-center w-full mx-10">
+            <img src="/images/pile-books-3d-render-isolated-background 1.svg" alt="img" width="500" height="500">
+        </div>
+        <div class="flex-1 flex-col justify-center w-full mx-10">
+            <div class="flex flex-col justify-center w-full">
+                <div class="flex justify-center items-center w-full p-10">
+                    <h1 class="text-[80px] text-[#ffffff] font-extrabold">Sign In</h1>
+                </div>
+            </div>
+            <div class="flex-col justify-center items-center w-full p-10">
+                <form action="/sign-in" method="POST" class="flex-col justify-center w-full space-y-8 px-8">
+                    <div class="flex flex-col justify-start">
+                        <label for="email" class="text-lg font-semibold text-[#ffffff]">Email</label>
+                        <input type="email" name="email"
+                            class="p-4 bg-[#EEF3FB] text-gray-500 outline-none rounded-xl shadow-md">
+                    </div>
+                    <div class="flex flex-col justify-start">
+                        <label for="password" class="text-lg font-semibold text-[#ffffff]">Password</label>
+                        <input type="password" name="password"
+                            class="p-4 bg-[#EEF3FB] text-gray-500 outline-none rounded-xl shadow-md">
+                    </div>
+                    <div class="flex flex-col justify-center">
+                        <button
+                            class="p-4 bg-[#FF7D61] text-[#ffffff] font-semibold rounded-xl shadow-md hover:bg-[#FF3F15] hover:shadow-xl">Login</button>
+                    </div>
+                </form>
+            </div>
+            <div class="flex justify-center w-full">
+                <div class="flex justify-center items-center w-full p-10 space-x-2">
+                    <h1 class="text-[18px] text-[#000000] font-medium">Not have account yet?</h1><a href="/register"
+                        class="text-[18px] text-[#ffffff] font-semibold hover:underline">Register
+                        here</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

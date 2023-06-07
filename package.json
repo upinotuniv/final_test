@@ -1,0 +1,27 @@
+{
+  "name": "final-test-backend",
+  "version": "1.0.0",
+  "description": "Final Test Backend",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Lurah",
+  "license": "ISC",
+  "dependencies": {
+    "@joi/date": "^2.1.0",
+    "bcrypt": "^5.1.0",
+    "body-parser": "^1.20.2",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.1.4",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "joi": "^17.9.2",
+    "jsonwebtoken": "^9.0.0",
+    "moment": "^2.29.4",
+    "mysql2": "^3.3.3",
+    "nodemon": "^2.0.22",
+    "sequelize": "^6.32.0",
+    "sequelize-cli": "^6.6.1"
+  }
+}
