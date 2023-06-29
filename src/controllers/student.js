@@ -2,6 +2,7 @@ const { student, user, student_grade, grade } = require("../../models");
 const joi = require("joi").extend(require("@joi/date"));
 const bcrypt = require("bcrypt");
 const moment = require("moment");
+const { Op } = require("sequelize");
 
 const getPagination = (page, size) => {
   const limit = size ? +size : 4;
@@ -17,9 +18,11 @@ exports.RegisterPage = async (req, res) => {
       },
     });
 
-    res.render("pages/register", {
-      data: gradeData,
-    });
+    return res.json({ grade: gradeData });
+
+    // res.render("pages/register", {
+    //   data: gradeData,
+    // });
   } catch (error) {
     console.log(error);
     return res.status(500).send({
@@ -99,7 +102,7 @@ exports.getAllUser = async (req, res) => {
       },
     });
 
-    const datas = await student_grade.findAll({
+    const data = await student_grade.findAll({
       include: [
         {
           model: grade,
@@ -111,15 +114,16 @@ exports.getAllUser = async (req, res) => {
       attrributes: {
         exclude: ["createdAt", "updatedAt"],
       },
-      group: ["fullname"],
     });
 
-    res.render("pages/adminDashboard", {
-      data: datas,
-      users: userData,
-      grades: gradeData,
-      moment: moment,
-    });
+    return res.json({ student: data, user: userData, grade: gradeData });
+
+    // res.render("pages/adminDashboard", {
+    //   data: datas,
+    //   users: userData,
+    //   grades: gradeData,
+    //   moment: moment,
+    // });
   } catch (error) {
     console.log(error);
     return res.status(500).send({
@@ -128,8 +132,71 @@ exports.getAllUser = async (req, res) => {
   }
 };
 
+// exports.getAllStudent = async (req, res) => {
+//   try {
+//     const fullnameSort = req.query.studentID;
+//     const studentData = await student.findOne({
+//       where: {
+//         id: req.student.id,
+//       },
+//       attributes: {
+//         exclude: ["createdAt", "updatedAt"],
+//       },
+//     });
+
+//     const datas = await student_grade.findAll({
+//       where: {
+//         studentID: req.student.id,
+//       },
+//       include: [
+//         {
+//           model: grade,
+//         },
+//         {
+//           model: student,
+//         },
+//       ],
+//       attributes: {
+//         exclude: ["createdAt", "updatedAt"],
+//       },
+//       group: ["fullname"],
+//     });
+
+//     const allStudentData = await student_grade.findAll({
+//       include: [
+//         {
+//           model: grade,
+//         },
+//         {
+//           model: student,
+//         },
+//       ],
+//       attributes: {
+//         exclude: ["createdAt", "updatedAt"],
+//       },
+//       group: ["fullname"],
+//       order: [["studentID", fullnameSort == 0 ? "ASC" : "DESC"]],
+//     });
+
+//     res.render("pages/studentDashboard", {
+//       student: allStudentData,
+//       data: datas,
+//       users: studentData,
+//       moment: moment,
+//     });
+//   } catch (error) {
+//     console.log(error);
+//     return res.status(500).send({
+//       message: "Internal server error",
+//     });
+//   }
+// };
+
 exports.getAllStudent = async (req, res) => {
   try {
+    const fullnameSort = req.query.fullnameSort;
+    const searchQuery = req.query.searchQuery || ""; // Mendapatkan nilai pencarian dari query string, default menjadi string kosong jika tidak ada
+
     const studentData = await student.findOne({
       where: {
         id: req.student.id,
@@ -140,6 +207,9 @@ exports.getAllStudent = async (req, res) => {
     });
 
     const datas = await student_grade.findAll({
+      where: {
+        studentID: req.student.id,
+      },
       include: [
         {
           model: grade,
@@ -148,17 +218,35 @@ exports.getAllStudent = async (req, res) => {
           model: student,
         },
       ],
-      attrributes: {
+      attributes: {
         exclude: ["createdAt", "updatedAt"],
       },
       group: ["fullname"],
     });
 
-    res.render("pages/studentDashboard", {
-      data: datas,
-      users: studentData,
-      moment: moment,
+    const allStudentData = await student_grade.findAll({
+      include: [
+        {
+          model: grade,
+        },
+        {
+          model: student,
+        },
+      ],
+      attributes: {
+        exclude: ["createdAt", "updatedAt"],
+      },
+      group: ["fullname"],
     });
+
+    return res.json({ user: studentData, student: allStudentData });
+
+    // res.render("pages/studentDashboard", {
+    //   student: allStudentData,
+    //   data: datas,
+    //   users: studentData,
+    //   moment: moment,
+    // });
   } catch (error) {
     console.log(error);
     return res.status(500).send({
@@ -178,10 +266,12 @@ exports.studentProfile = async (req, res) => {
       },
     });
 
-    res.render("pages/studentEdit", {
-      users: studentData,
-      moment: moment,
-    });
+    return res.json({ student: studentData });
+
+    // res.render("pages/studentEdit", {
+    //   users: studentData,
+    //   moment: moment,
+    // });
   } catch (error) {
     console.log(error);
     return res.status(500).send({
@@ -294,7 +384,9 @@ exports.UpdateStudent = async (req, res) => {
       where: { id },
     });
 
-    return res.redirect("/");
+    return res.json({ data: findStudent });
+
+    // return res.redirect("/");
   } catch (error) {
     console.log(error);
     return res.status(500).send({
@@ -432,7 +524,11 @@ exports.deleteStudent = async (req, res) => {
       },
     });
 
-    res.redirect("/");
+    return res.status(200).send({
+      message: "OK",
+    });
+
+    // res.redirect("/");
   } catch (error) {
     console.log(error);
     return res.status(500).send({
@@ -453,9 +549,23 @@ exports.getMathPage = async (req, res) => {
       },
     });
 
-    return res.render("pages/mathematicsPage", {
-      users: studentData,
-      moment: moment,
+    const gradeData = await student_grade.findOne({
+      where: {
+        studentID: req.student.id,
+        gradeID: 1, // Ganti dengan ID kelas Matematika
+      },
+    });
+
+    if (!gradeData) {
+      // Siswa tidak memiliki akses ke kelas Matematika
+      return res.status(400).send({
+        message: "You not have access to this class",
+      });
+    }
+
+    return res.status(200).send({
+      message: "Wellcome to math class",
+      user: studentData,
     });
   } catch (error) {
     console.log(error);
@@ -464,6 +574,8 @@ exports.getMathPage = async (req, res) => {
     });
   }
 };
+
+// Lakukan hal yang sama untuk getSciencePage dan getSocialPage
 
 exports.getSciencePage = async (req, res) => {
   try {
@@ -476,9 +588,22 @@ exports.getSciencePage = async (req, res) => {
       },
     });
 
-    return res.render("pages/sciencePage", {
-      users: studentData,
-      moment: moment,
+    const gradeData = await student_grade.findOne({
+      where: {
+        studentID: req.student.id,
+        gradeID: 2,
+      },
+    });
+
+    if (!gradeData) {
+      return res.status(400).send({
+        message: "You not have access to this class",
+      });
+    }
+
+    return res.status(200).send({
+      message: "Wellcome to science class",
+      user: studentData,
     });
   } catch (error) {
     console.log(error);
@@ -499,9 +624,22 @@ exports.getSocialPage = async (req, res) => {
       },
     });
 
-    return res.render("pages/socialPage", {
-      users: studentData,
-      moment: moment,
+    const gradeData = await student_grade.findOne({
+      where: {
+        studentID: req.student.id,
+        gradeID: 3,
+      },
+    });
+
+    if (!gradeData) {
+      return res.status(400).send({
+        message: "You not have access to this class",
+      });
+    }
+
+    return res.status(200).send({
+      message: "Wellcome to social class",
+      user: studentData,
     });
   } catch (error) {
     console.log(error);
@@ -522,9 +660,22 @@ exports.getLiteraturePage = async (req, res) => {
       },
     });
 
-    return res.render("pages/literaturePage", {
-      users: studentData,
-      moment: moment,
+    const gradeData = await student_grade.findOne({
+      where: {
+        studentID: req.student.id,
+        gradeID: 4,
+      },
+    });
+
+    if (!gradeData) {
+      return res.status(400).send({
+        message: "You not have access to this class",
+      });
+    }
+
+    return res.status(200).send({
+      message: "Wellcome to literature class",
+      user: studentData,
     });
   } catch (error) {
     console.log(error);
@@ -545,9 +696,22 @@ exports.getMartialArtPage = async (req, res) => {
       },
     });
 
-    return res.render("pages/martialArtPage", {
-      users: studentData,
-      moment: moment,
+    const gradeData = await student_grade.findOne({
+      where: {
+        studentID: req.student.id,
+        gradeID: 5,
+      },
+    });
+
+    if (!gradeData) {
+      return res.status(400).send({
+        message: "You not have access to this class",
+      });
+    }
+
+    return res.status(200).send({
+      message: "Wellcome to martial art class",
+      user: studentData,
     });
   } catch (error) {
     console.log(error);
@@ -568,9 +732,22 @@ exports.getDancePage = async (req, res) => {
       },
     });
 
-    return res.render("pages/dancePage", {
-      users: studentData,
-      moment: moment,
+    const gradeData = await student_grade.findOne({
+      where: {
+        studentID: req.student.id,
+        gradeID: 6,
+      },
+    });
+
+    if (!gradeData) {
+      return res.status(400).send({
+        message: "You not have access to this class",
+      });
+    }
+
+    return res.status(200).send({
+      message: "Wellcome to dance class",
+      user: studentData,
     });
   } catch (error) {
     console.log(error);

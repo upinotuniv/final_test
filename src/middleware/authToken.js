@@ -3,12 +3,13 @@ const { user, student } = require("../../models");
 
 exports.authToken = async (req, res, next) => {
   try {
-    const cookie = req.cookies;
-    const token = cookie && cookie.token;
+    const header = req.headers["authorization"];
+    const token = header && header.split(" ")[1];
 
-    if (!cookie || Object.keys(cookie).length == 0 || cookie == null) {
-      return res.status(403).status({
-        message: "Unauthorized",
+    if (!header) {
+      return res.status(401).send({
+        status: "failed",
+        message: "unauthorized",
       });
     }
 

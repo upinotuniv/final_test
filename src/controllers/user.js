@@ -87,8 +87,18 @@ exports.Login = async (req, res) => {
           { id: findUser.id, email: findUser.email },
           process.env.ACCESS_TOKEN_SECRET
         );
-        res.cookie("token", userAccessToken);
-        return res.redirect("/admin-dashboard");
+
+        return res.json({ userAccessToken });
+
+        // const userData = {
+        //   email: findUser.email,
+        //   token: userAccessToken,
+        // };
+
+        // return res.status(200).send({
+        //   message: "login success",
+        //   data: userData,
+        // });
       }
     } else {
       let findStudent = await student.findOne({
@@ -122,8 +132,18 @@ exports.Login = async (req, res) => {
           { id: findStudent.id, email: findStudent.email },
           process.env.ACCESS_TOKEN_SECRET
         );
-        res.cookie("token", studentAccessToken);
-        return res.redirect("/student-dashboard");
+
+        return res.json({ studentAccessToken });
+
+        // const studentData = {
+        //   email: findStudent.email,
+        //   token: studentAccessToken,
+        // };
+
+        // return res.status(200).send({
+        //   message: "login success",
+        //   data: studentData,
+        // });
       }
     }
   } catch (error) {

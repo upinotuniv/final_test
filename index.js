@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const cookieParser = require("cookie-parser");
+const cors = require("cors");
+// const cookieParser = require("cookie-parser");
 const path = require("path");
 const userRoutes = require("./src/routes/user");
 const studentRoutes = require("./src/routes/student");
@@ -10,7 +11,8 @@ const port = 5000;
 
 // app use
 app.use(express.json());
-app.use(cookieParser());
+// app.use(cookieParser());
+app.use(cors({ credentials: true, origin: "http://localhost:5173" }));
 app.use(express.static("public"));
 app.use(
   bodyParser.urlencoded({

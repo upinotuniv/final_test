@@ -39,9 +39,11 @@
                                                         clip-rule="evenodd"></path>
                                                 </svg>
                                             </div>
-                                            <input type="text" id="table-search"
-                                                class="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                placeholder="Search for items">
+                                            <form action="/student-dashboard"><input type="text" id="table-search"
+                                                    name="searchQuery"
+                                                    class="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                    placeholder="Search for items"></form>
+
                                         </div>
                                     </div>
 
@@ -60,24 +62,18 @@
                                             <ul class="text-sm text-gray-700 dark:text-gray-200"
                                                 aria-labelledby="dropdownDefaultButton">
                                                 <li>
-                                                    <a href="#"
-                                                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white border-b">Name:
-                                                        Ascending</a>
+                                                    <form action="/student-dashboard">
+                                                        <button type="submit" name="fullnameSort" value="0"
+                                                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white border-b w-full">Name:
+                                                            Ascending</button>
+                                                    </form>
                                                 </li>
                                                 <li>
-                                                    <a href="#"
-                                                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white border-b">Name:
-                                                        Descending</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#"
-                                                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white border-b">Age:
-                                                        Oldest</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#"
-                                                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white border-b">Age:
-                                                        Youngest</a>
+                                                    <form action="/student-dashboard">
+                                                        <button type="submit" name="fullnameSort" value="1"
+                                                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white border-b w-full">Name:
+                                                            Descending</button>
+                                                    </form>
                                                 </li>
                                             </ul>
                                         </div>
@@ -115,7 +111,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <% data.forEach((student, index)=> { %>
+                                            <% student.forEach((student, index)=> { %>
                                                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                                     <th scope="row"
                                                         class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">

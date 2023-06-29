@@ -17,9 +17,9 @@ router.get("/dance-grade", authToken, student.getDancePage);
 
 // action
 router.post("/sign-up-student", student.StudentRegister);
-router.post("/update-student/:id", authToken, student.UpdateStudent);
+router.put("/update-student/:id", authToken, student.UpdateStudent);
 router.post("/add-student", authToken, student.insertStudent);
 // router.post("/edit-student/:id", authToken, student.editStudent);
-router.get("/delete-student/:id", authToken, student.deleteStudent);
+router.delete("/delete-student/:id", authToken, student.deleteStudent);
 
 module.exports = router;
